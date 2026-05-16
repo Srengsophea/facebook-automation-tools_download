@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAT - Facebook Automation Tools</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-dark: #0b0f19;
+            --card-bg: #131b2e;
+            --border-color: #1e293b;
+            --brand-blue: #2563eb;
+            --brand-blue-hover: #1d4ed8;
+            --text-main: #f1f5f9;
+            --text-muted: #94a3b8;
+            --ready-green: #10b981;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            line-height: 1.6;
+        }
+
+        /* --- Navigation --- */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.2rem 5%;
+            border-bottom: 1px solid var(--border-color);
+            background-color: rgba(11, 15, 25, 0.85);
+            backdrop-filter: blur(12px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        /* Fixed size style for your custom asset icon logo image */
+        .brand-logo-img {
+            width: 38px;
+            height: 38px;
+            object-fit: contain;
+            border-radius: 8px;
+        }
+
+        .logo-text {
+            font-size: 1.6rem;
+            font-weight: 800;
+            letter-spacing: 1px;
+            background: linear-gradient(to right, #ffffff, #3b82f6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 22px;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            font-size: 0.95rem;
+        }
+
+        .btn-telegram {
+            background-color: #229ED9;
+            color: white;
+            border: none;
+        }
+
+        .btn-telegram:hover {
+            background-color: #1e87b8;
+            transform: translateY(-1px);
+        }
+
+        .btn-primary {
+            background-color: var(--brand-blue);
+            color: white;
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--brand-blue-hover);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 20px rgba(37, 99, 235, 0.4);
+        }
+
+        /* --- Layout Container --- */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 5%;
+        }
+
+        /* --- Hero Section --- */
+        .hero {
+            padding: 4rem 0 2rem 0;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 1.2rem;
+            line-height: 1.1;
+            letter-spacing: -0.5px;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--text-muted);
+            max-width: 750px;
+            margin: 0 auto 2.5rem auto;
+        }
+
+        /* --- Image Showcase Container --- */
+        .app-window-wrapper {
+            max-width: 1000px;
+            margin: 2rem auto 4rem auto;
+            box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.8);
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+            transition: transform 0.3s ease;
+        }
+
+        .app-window-wrapper:hover {
+            transform: scale(1.01);
+        }
+
+        .app-screenshot {
+            width: 100%;
+            display: block;
+            height: auto;
+        }
+
+        /* --- Introduction Section --- */
+        .section-padding {
+            padding: 5rem 0;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .intro-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+        }
+
+        .section-tag {
+            color: var(--brand-blue);
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .section-h2 {
+            font-size: 2.2rem;
+            font-weight: 800;
+            margin-bottom: 1.2rem;
+            line-height: 1.2;
+        }
+
+        .intro-text p {
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+            font-size: 1.05rem;
+        }
+
+        /* --- Video Tutorial Section --- */
+        .video-section {
+            background-color: #0c1222;
+            text-align: center;
+        }
+
+        .video-wrapper {
+            max-width: 800px;
+            margin: 2.5rem auto 0 auto;
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+            height: 0;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+        }
+
+        .video-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000;
+        }
+
+        /* --- Features Grid --- */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 3rem;
+        }
+
+        .feature-card {
+            background-color: var(--card-bg);
+            padding: 2rem;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--brand-blue);
+        }
+
+        .feature-icon {
+            font-size: 1.8rem;
+            color: #3b82f6;
+            margin-bottom: 1rem;
+        }
+
+        .feature-card h3 { font-size: 1.25rem; margin-bottom: 0.5rem; }
+        .feature-card p { color: var(--text-muted); font-size: 0.95rem; }
+
+        /* --- Footer Section --- */
+        footer {
+            text-align: center;
+            padding: 5rem 0;
+            border-top: 1px solid var(--border-color);
+            background-color: #070a12;
+        }
+
+        .footer-cta h2 { font-size: 2.2rem; font-weight: 800; margin-bottom: 1rem; }
+        .footer-cta p { color: var(--text-muted); margin-bottom: 2rem; }
+
+        @media (max-width: 968px) {
+            .intro-grid { grid-template-columns: 1fr; gap: 30px; }
+            .hero h1 { font-size: 2.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo-container">
+            <img class="brand-logo-img" src="asset/icon_tool.png" alt="FAT App Icon">
+            <span class="logo-text">Facebook Automation Tools</span>
+        </div>
+        <div class="nav-buttons">
+            <a href="https://t.me/YOUR_TELEGRAM_LINK" target="_blank" class="btn btn-telegram">
+                <i class="fab fa-telegram-plane"></i> Contact Telegram Admin
+            </a>
+        </div>
+    </header>
+
+    <div class="container">
+        <section class="hero">
+            <h1>Facebook Automation Tools</h1>
+            <p>An enterprise-grade optimization dashboard engineered for professional anti-detect multilogin execution, multi-threaded operations, and account matrix workflow automation.</p>
+            
+            <a href="https://github.com/your_username/your_repo/releases/latest/download/MyAutomationTool_Setup.zip" class="btn btn-primary" style="padding: 14px 32px; font-size: 1.1rem;">
+                <i class="fas fa-download"></i> Download App Installer (.ZIP)
+            </a>
+            <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 12px;">Size: ~1.8 GB Bundle • Bundle includes Brave, GoLogin API, Chrome Portable, and Chromium packages.</p>
+        </section>
+
+        <div class="app-window-wrapper">
+            <img class="app-screenshot" src="/asset/image.png" alt="FAT Account Matrix UI Dashboard Overview">
+        </div>
+
+        <section class="section-padding intro-grid">
+            <div class="intro-text">
+                <span class="section-tag">Introduction</span>
+                <h2 class="section-h2">What is Facebook Automation Tools (FAT)?</h2>
+                <p>FAT is a robust, all-in-one execution engine custom-tailored for advanced profile identity orchestration. By completely isolating cookie structures, system variables, and localized proxy parameters, FAT ensures secure account task management across independent profiles simultaneously.</p>
+                <p>Equipped with built-in sandbox distributions of portable Chrome environments, Brave instances, and deep GoLogin core capabilities, FAT manages your automation routines with zero risk of footprint crossover.</p>
+            </div>
+            <div class="feature-card" style="background: #161e31; border-color: #2563eb;">
+                <h4 style="margin-bottom: 15px; font-size: 1.1rem; color: #fff;"><i class="fas fa-microchip" style="color:#3b82f6; margin-right: 8px;"></i> Native Structural Integration</h4>
+                <p style="font-size:0.9rem; margin-bottom: 12px; line-height: 1.5;">Unlike basic web extensions, FAT runs inside an isolated desktop framework that interacts directly with localized portable configurations.</p>
+                <hr style="border: 0; border-top: 1px solid #1e293b; margin: 15px 0;">
+                <h4 style="margin-bottom: 15px; font-size: 1.1rem; color: #fff;"><i class="fas fa-network-wired" style="color:#10b981; margin-right: 8px;"></i> Smart Bandwidth Updating</h4>
+                <p style="font-size:0.9rem; line-height: 1.5;">Our smart launcher decouples programmatic updates from asset weights. Get performance expansions instantly with lightweight, code-only background update cycles.</p>
+            </div>
+        </section>
+
+        <section class="section-padding video-section" style="border-top: 1px solid var(--border-color); width: 100vw; margin-left: calc(-50vw + 50%);">
+            <div class="container">
+                <span class="section-tag">Learning Center</span>
+                <h2 class="section-h2">Video Setup & Tutorial Guide</h2>
+                <p style="color: var(--text-muted); max-width: 650px; margin: 0 auto;">Watch this comprehensive configuration walkthrough to learn how to properly import profile parameters, toggle driver setups, and deploy automation routines.</p>
+                
+                <div class="video-wrapper">
+                    <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="FAT Tutorial Video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+            </div>
+        </section>
+
+        <section class="section-padding">
+            <h2 class="section-h2" style="text-align: center;">Engine Architecture Specifications</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-fingerprint"></i></div>
+                    <h3>Anti-Detect Canvas Masking</h3>
+                    <p>Leverages native modifications across Brave, Chromium, and Chrome Portable to protect your identity parameters across custom automation operations.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-shield-alt"></i></div>
+                    <h3>Encrypted 2FA Generation</h3>
+                    <p>Integrated cryptographic token fields calculate verification codes seamlessly inside the client UI, maintaining constant session connectivity.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-code-branch"></i></div>
+                    <h3>Decoupled 1.8GB Assets</h3>
+                    <p>Keep browser binaries independent from the launcher code. When you update, you only download small code adjustments via the one-click process.</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <div class="container footer-cta">
+            <h2>Ready to Deploy FAT?</h2>
+            <p>Download the production release bundle or message the core development channel for license configurations or custom API hooks.</p>
+            <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
+                <a href="https://github.com/your_username/your_repo/releases/latest/download/MyAutomationTool_Setup.zip" class="btn btn-primary">
+                    <i class="fas fa-download"></i> Download Setup Environment
+                </a>
+                <a href="https://t.me/YOUR_TELEGRAM_LINK" target="_blank" class="btn btn-telegram">
+                    <i class="fab fa-telegram-plane"></i> Message Telegram Support
+                </a>
+            </div>
+            <p style="margin-top: 3rem; font-size: 0.8rem; color: var(--text-muted);">&copy; 2026 FAT (Facebook Automation Tools). Designed for premium profile orchestration.</p>
+        </div>
+    </footer>
+
+</body>
+</html>
